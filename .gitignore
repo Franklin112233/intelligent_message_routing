@@ -201,6 +201,9 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Trained MTL model (run make train to create)
+models/
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

@@ -1,0 +1,301 @@
+message_id,text,label,sensitive,suggested_queue
+MSG0001,What are your branch opening hours near Manchester?,general,true,General Banking
+MSG0002,I think there is a transaction I don’t recognise at Tesco for £45.50 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0003,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0004,What are your branch opening hours near Birmingham?,general,false,General Banking
+MSG0005,"Card used in London but I was at home. Please help, this looks like fraud.",fraud,true,Fraud/Economic Crime Prevention
+MSG0006,I forgot my online banking password—how can I reset it? You can reach me at morgan.white@example.com,general,true,General Banking
+MSG0007,My credit score improved; can you review my APR? My card number ends 4791 5741 2307 4814,credit,true,Credit/Risk
+MSG0008,I was declined for an overdraft. Can you explain the decision?,credit,false,Credit/Risk
+MSG0009,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0010,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0011,I received a call asking for my account number and sort code. Was this you?,fraud,false,Fraud/Economic Crime Prevention
+MSG0012,What are your branch opening hours near Bristol?,general,false,General Banking
+MSG0013,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0014,I was promised a refund but it hasn’t arrived after 14 days. My postcode is B33 8TH,dispute,true,Disputes/Chargebacks
+MSG0015,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0016,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0017,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0018,I received a call asking for my account number and sort code. Was this you? My postcode is SW1A 1AA,fraud,true,Fraud/Economic Crime Prevention
+MSG0019,What are your branch opening hours near Bristol?,general,false,General Banking
+MSG0020,The hotel charged me twice—please assist with a dispute. You can reach me at taylor.jones@example.com,dispute,true,Disputes/Chargebacks
+MSG0021,I want to raise a dispute for a card payment to Booking.com for £120.00.,dispute,false,Disputes/Chargebacks
+MSG0022,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0023,Can I increase my credit card limit? Current limit £120.00 seems low. You can reach me at morgan.lee@example.com,credit,true,Credit/Risk
+MSG0024,"Card used in London but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0025,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0026,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0027,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0028,My credit score improved; can you review my APR? My card number ends 4065 6539 1344 4770,credit,true,Credit/Risk
+MSG0029,What are your branch opening hours near Manchester?,general,true,General Banking
+MSG0030,I received a call asking for my account number and sort code. Was this you?,fraud,false,Fraud/Economic Crime Prevention
+MSG0031,I was declined for an overdraft. Can you explain the decision?,credit,true,Credit/Risk
+MSG0032,I want to raise a dispute for a card payment to Uber for £12.99.,dispute,false,Disputes/Chargebacks
+MSG0033,I want to raise a dispute for a card payment to Tesco for £45.50.,dispute,false,Disputes/Chargebacks
+MSG0034,"Card used in Manchester but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0035,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0036,What are your branch opening hours near Manchester?,general,false,General Banking
+MSG0037,I was promised a refund but it hasn’t arrived after 14 days. My phone is +44 7471070189,dispute,true,Disputes/Chargebacks
+MSG0038,Someone set up a new payee I don’t know. My card number ends 4991 1958 9883 1998,fraud,true,Fraud/Economic Crime Prevention
+MSG0039,What are your branch opening hours near Edinburgh?,general,false,General Banking
+MSG0040,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0041,I think there is a transaction I don’t recognise at Uber for £45.50 yesterday. My postcode is EC1A 1BB,fraud,true,Fraud/Economic Crime Prevention
+MSG0042,What are your branch opening hours near Edinburgh?,general,false,General Banking
+MSG0043,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0044,I received a call asking for my account number and sort code. Was this you?,fraud,false,Fraud/Economic Crime Prevention
+MSG0045,What are your branch opening hours near Leeds?,general,false,General Banking
+MSG0046,Can I increase my credit card limit? Current limit £45.50 seems low. You can reach me at alex.jones@example.com,credit,true,Credit/Risk
+MSG0047,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0048,Can I increase my credit card limit? Current limit £268.40 seems low.,credit,false,Credit/Risk
+MSG0049,"Card used in London but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0050,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0051,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0052,What are your branch opening hours near Bristol? You can reach me at morgan.jones@example.com,general,true,General Banking
+MSG0053,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0054,What are your branch opening hours near Leeds? You can reach me at taylor.white@example.com,general,true,General Banking
+MSG0055,"Card used in Bristol but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0056,What are your branch opening hours near Birmingham?,general,true,General Banking
+MSG0057,How do I update my address after moving house?,general,false,General Banking
+MSG0058,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0059,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0060,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0061,How do I update my address after moving house? You can reach me at pat.smith@example.com,general,true,General Banking
+MSG0062,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0063,Can you confirm my balance and recent payments? You can reach me at alex.smith@example.com,general,true,General Banking
+MSG0064,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0065,I was promised a refund but it hasn’t arrived after 14 days. My phone is +44 7079782527,dispute,true,Disputes/Chargebacks
+MSG0066,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0067,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0068,I was promised a refund but it hasn’t arrived after 14 days. My card number ends 4196 7888 7211 3851,dispute,true,Disputes/Chargebacks
+MSG0069,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0070,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0071,Is there a fee for international transfers to the EU? My postcode is B33 8TH,general,true,General Banking
+MSG0072,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0073,I think there is a transaction I don’t recognise at Tesco for £8.75 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0074,I received a call asking for my account number and sort code. Was this you?,fraud,false,Fraud/Economic Crime Prevention
+MSG0075,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0076,Can I increase my credit card limit? Current limit £8.75 seems low. My postcode is M1 1AE,credit,true,Credit/Risk
+MSG0077,"Card used in Edinburgh but I was at home. Please help, this looks like fraud. My phone is +44 7885017682",fraud,true,Fraud/Economic Crime Prevention
+MSG0078,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0079,Item not delivered and the retailer won’t refund. How do I start a chargeback? My card number ends 4860 5543 9540 8939,dispute,true,Disputes/Chargebacks
+MSG0080,Can you confirm my balance and recent payments? You can reach me at pat.lee@example.com,general,true,General Banking
+MSG0081,Can I increase my credit card limit? Current limit £45.50 seems low.,credit,false,Credit/Risk
+MSG0082,"Card used in Edinburgh but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0083,I want to raise a dispute for a card payment to Tesco for £8.75.,dispute,false,Disputes/Chargebacks
+MSG0084,What are your branch opening hours near Edinburgh?,general,false,General Banking
+MSG0085,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0086,Is there a fee for international transfers to the EU? My phone is +44 7062191530,general,true,General Banking
+MSG0087,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0088,Can I increase my credit card limit? Current limit £268.40 seems low.,credit,false,Credit/Risk
+MSG0089,I received a call asking for my account number and sort code. Was this you? My phone is +44 7538408562,fraud,true,Fraud/Economic Crime Prevention
+MSG0090,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0091,Can you confirm my balance and recent payments? My postcode is SW1A 1AA,general,true,General Banking
+MSG0092,My credit score improved; can you review my APR?,credit,true,Credit/Risk
+MSG0093,"Card used in Leeds but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0094,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0095,Can I increase my credit card limit? Current limit £45.50 seems low.,credit,true,Credit/Risk
+MSG0096,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0097,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0098,What are your branch opening hours near Edinburgh?,general,false,General Banking
+MSG0099,My account shows a transfer I didn’t make. Can you block and investigate? You can reach me at casey.brown@example.com,fraud,true,Fraud/Economic Crime Prevention
+MSG0100,I forgot my online banking password—how can I reset it? My postcode is M1 1AE,general,true,General Banking
+MSG0101,The hotel charged me twice—please assist with a dispute. My phone is +44 7372372114,dispute,true,Disputes/Chargebacks
+MSG0102,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0103,"Card used in Bristol but I was at home. Please help, this looks like fraud. My postcode is W1A 0AX",fraud,true,Fraud/Economic Crime Prevention
+MSG0104,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0105,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0106,I want to raise a dispute for a card payment to Amazon for £120.00.,dispute,false,Disputes/Chargebacks
+MSG0107,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0108,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0109,"Card used in Birmingham but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0110,How do I update my address after moving house?,general,false,General Banking
+MSG0111,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0112,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0113,I think there is a transaction I don’t recognise at Amazon for £268.40 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0114,I received a call asking for my account number and sort code. Was this you? My phone is +44 7755728776,fraud,true,Fraud/Economic Crime Prevention
+MSG0115,I think there is a transaction I don’t recognise at eBay for £8.75 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0116,I want to raise a dispute for a card payment to Deliveroo for £12.99. My postcode is W1A 0AX,dispute,true,Disputes/Chargebacks
+MSG0117,"Card used in Edinburgh but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0118,How do I update my address after moving house?,general,false,General Banking
+MSG0119,I was promised a refund but it hasn’t arrived after 14 days.,dispute,true,Disputes/Chargebacks
+MSG0120,How do I update my address after moving house?,general,true,General Banking
+MSG0121,I want to raise a dispute for a card payment to Tesco for £120.00. My phone is +44 7141329612,dispute,true,Disputes/Chargebacks
+MSG0122,I’d like to apply for a loan—what documents do you need? My card number ends 4930 5352 3330 2169,credit,true,Credit/Risk
+MSG0123,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0124,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0125,I want to raise a dispute for a card payment to Deliveroo for £12.99.,dispute,false,Disputes/Chargebacks
+MSG0126,What are your branch opening hours near Birmingham?,general,false,General Banking
+MSG0127,What are your branch opening hours near Leeds? My card number ends 4481 9502 8245 5557,general,true,General Banking
+MSG0128,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0129,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0130,Can you confirm my balance and recent payments?,general,true,General Banking
+MSG0131,I was declined for an overdraft. Can you explain the decision?,credit,false,Credit/Risk
+MSG0132,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0133,I forgot my online banking password—how can I reset it? My card number ends 4949 5719 8178 8941,general,true,General Banking
+MSG0134,Someone set up a new payee I don’t know. My postcode is SW1A 1AA,fraud,true,Fraud/Economic Crime Prevention
+MSG0135,What are your branch opening hours near Edinburgh?,general,false,General Banking
+MSG0136,How do I update my address after moving house?,general,false,General Banking
+MSG0137,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0138,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0139,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0140,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0141,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0142,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0143,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0144,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0145,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0146,What are your branch opening hours near London?,general,false,General Banking
+MSG0147,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0148,My credit score improved; can you review my APR? You can reach me at morgan.white@example.com,credit,true,Credit/Risk
+MSG0149,The hotel charged me twice—please assist with a dispute.,dispute,true,Disputes/Chargebacks
+MSG0150,Can I increase my credit card limit? Current limit £12.99 seems low.,credit,false,Credit/Risk
+MSG0151,"Card used in London but I was at home. Please help, this looks like fraud.",fraud,true,Fraud/Economic Crime Prevention
+MSG0152,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0153,I think there is a transaction I don’t recognise at Deliveroo for £8.75 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0154,Item not delivered and the retailer won’t refund. How do I start a chargeback? You can reach me at casey.smith@example.com,dispute,true,Disputes/Chargebacks
+MSG0155,I was declined for an overdraft. Can you explain the decision? You can reach me at taylor.lee@example.com,credit,true,Credit/Risk
+MSG0156,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0157,I received a call asking for my account number and sort code. Was this you? My postcode is W1A 0AX,fraud,true,Fraud/Economic Crime Prevention
+MSG0158,Can you confirm my balance and recent payments?,general,true,General Banking
+MSG0159,Can you confirm my balance and recent payments? My card number ends 4643 2591 1645 6061,general,true,General Banking
+MSG0160,What are your branch opening hours near Birmingham? You can reach me at pat.brown@example.com,general,true,General Banking
+MSG0161,"Card used in Bristol but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0162,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0163,I want to raise a dispute for a card payment to Apple Store for £12.99.,dispute,false,Disputes/Chargebacks
+MSG0164,I received a call asking for my account number and sort code. Was this you? My phone is +44 7045495029,fraud,true,Fraud/Economic Crime Prevention
+MSG0165,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0166,Can you confirm my balance and recent payments? My postcode is W1A 0AX,general,true,General Banking
+MSG0167,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0168,My credit score improved; can you review my APR?,credit,true,Credit/Risk
+MSG0169,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0170,I was declined for an overdraft. Can you explain the decision?,credit,false,Credit/Risk
+MSG0171,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0172,I received a call asking for my account number and sort code. Was this you?,fraud,false,Fraud/Economic Crime Prevention
+MSG0173,The hotel charged me twice—please assist with a dispute.,dispute,true,Disputes/Chargebacks
+MSG0174,Is there a fee for international transfers to the EU? My card number ends 4805 4362 2124 4394,general,true,General Banking
+MSG0175,How do I update my address after moving house? My card number ends 4133 9850 5106 3858,general,true,General Banking
+MSG0176,I think there is a transaction I don’t recognise at Tesco for £12.99 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0177,My account shows a transfer I didn’t make. Can you block and investigate? My phone is +44 7825253751,fraud,true,Fraud/Economic Crime Prevention
+MSG0178,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0179,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0180,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0181,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0182,I want to raise a dispute for a card payment to eBay for £268.40. You can reach me at taylor.white@example.com,dispute,true,Disputes/Chargebacks
+MSG0183,The hotel charged me twice—please assist with a dispute. My postcode is B33 8TH,dispute,true,Disputes/Chargebacks
+MSG0184,I want to raise a dispute for a card payment to Booking.com for £268.40.,dispute,false,Disputes/Chargebacks
+MSG0185,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0186,Can you confirm my balance and recent payments? My card number ends 4703 8770 2099 2494,general,true,General Banking
+MSG0187,What are your branch opening hours near Birmingham?,general,false,General Banking
+MSG0188,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0189,I forgot my online banking password—how can I reset it? You can reach me at taylor.lee@example.com,general,true,General Banking
+MSG0190,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0191,The hotel charged me twice—please assist with a dispute. My phone is +44 7893446356,dispute,true,Disputes/Chargebacks
+MSG0192,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0193,"Card used in Bristol but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0194,"Card used in London but I was at home. Please help, this looks like fraud.",fraud,true,Fraud/Economic Crime Prevention
+MSG0195,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0196,Is there a fee for international transfers to the EU? My postcode is SW1A 1AA,general,true,General Banking
+MSG0197,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0198,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0199,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0200,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0201,"Card used in Bristol but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0202,I received a call asking for my account number and sort code. Was this you?,fraud,false,Fraud/Economic Crime Prevention
+MSG0203,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0204,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0205,Is there a fee for international transfers to the EU?,general,true,General Banking
+MSG0206,Can you confirm my balance and recent payments? My postcode is M1 1AE,general,true,General Banking
+MSG0207,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0208,Item not delivered and the retailer won’t refund. How do I start a chargeback? My postcode is EC1A 1BB,dispute,true,Disputes/Chargebacks
+MSG0209,My credit score improved; can you review my APR? You can reach me at sam.jones@example.com,credit,true,Credit/Risk
+MSG0210,What are your branch opening hours near Edinburgh?,general,false,General Banking
+MSG0211,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0212,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0213,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0214,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0215,I think there is a transaction I don’t recognise at Deliveroo for £268.40 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0216,What are your branch opening hours near Birmingham? My postcode is M1 1AE,general,true,General Banking
+MSG0217,I want to raise a dispute for a card payment to Apple Store for £12.99.,dispute,false,Disputes/Chargebacks
+MSG0218,"Card used in Birmingham but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0219,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0220,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0221,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0222,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0223,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0224,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0225,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0226,Item not delivered and the retailer won’t refund. How do I start a chargeback? My card number ends 4158 2264 5846 2657,dispute,true,Disputes/Chargebacks
+MSG0227,I want to raise a dispute for a card payment to Uber for £120.00. My phone is +44 7231776452,dispute,true,Disputes/Chargebacks
+MSG0228,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0229,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0230,How do I update my address after moving house?,general,false,General Banking
+MSG0231,How do I update my address after moving house?,general,false,General Banking
+MSG0232,I received a call asking for my account number and sort code. Was this you?,fraud,false,Fraud/Economic Crime Prevention
+MSG0233,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0234,Can I increase my credit card limit? Current limit £268.40 seems low. My card number ends 4279 8361 9410 3414,credit,true,Credit/Risk
+MSG0235,What are your branch opening hours near Bristol?,general,false,General Banking
+MSG0236,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0237,"Card used in London but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0238,How do I update my address after moving house?,general,false,General Banking
+MSG0239,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0240,Can I increase my credit card limit? Current limit £45.50 seems low.,credit,false,Credit/Risk
+MSG0241,Is there a fee for international transfers to the EU?,general,true,General Banking
+MSG0242,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0243,Someone set up a new payee I don’t know. My phone is +44 7092518345,fraud,true,Fraud/Economic Crime Prevention
+MSG0244,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0245,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0246,I was promised a refund but it hasn’t arrived after 14 days.,dispute,true,Disputes/Chargebacks
+MSG0247,What are your branch opening hours near Birmingham?,general,false,General Banking
+MSG0248,My account shows a transfer I didn’t make. Can you block and investigate? My phone is +44 7794790150,fraud,true,Fraud/Economic Crime Prevention
+MSG0249,"Card used in London but I was at home. Please help, this looks like fraud.",fraud,true,Fraud/Economic Crime Prevention
+MSG0250,I was promised a refund but it hasn’t arrived after 14 days. You can reach me at morgan.smith@example.com,dispute,true,Disputes/Chargebacks
+MSG0251,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0252,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0253,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0254,Item not delivered and the retailer won’t refund. How do I start a chargeback? You can reach me at casey.lee@example.com,dispute,true,Disputes/Chargebacks
+MSG0255,I was promised a refund but it hasn’t arrived after 14 days.,dispute,false,Disputes/Chargebacks
+MSG0256,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0257,What are your branch opening hours near Bristol?,general,false,General Banking
+MSG0258,How do I update my address after moving house?,general,false,General Banking
+MSG0259,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0260,I want to raise a dispute for a card payment to Deliveroo for £45.50.,dispute,false,Disputes/Chargebacks
+MSG0261,I was promised a refund but it hasn’t arrived after 14 days. You can reach me at jordan.lee@example.com,dispute,true,Disputes/Chargebacks
+MSG0262,How do I update my address after moving house? My postcode is M1 1AE,general,true,General Banking
+MSG0263,Can I increase my credit card limit? Current limit £120.00 seems low.,credit,false,Credit/Risk
+MSG0264,My credit score improved; can you review my APR?,credit,true,Credit/Risk
+MSG0265,Can you confirm my balance and recent payments? My postcode is W1A 0AX,general,true,General Banking
+MSG0266,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0267,"Card used in Manchester but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0268,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0269,Is there a fee for international transfers to the EU?,general,false,General Banking
+MSG0270,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0271,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0272,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0273,How do I update my address after moving house?,general,false,General Banking
+MSG0274,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0275,Someone set up a new payee I don’t know. My postcode is W1A 0AX,fraud,true,Fraud/Economic Crime Prevention
+MSG0276,My account shows a transfer I didn’t make. Can you block and investigate?,fraud,false,Fraud/Economic Crime Prevention
+MSG0277,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0278,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0279,I think there is a transaction I don’t recognise at Uber for £268.40 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0280,I forgot my online banking password—how can I reset it?,general,false,General Banking
+MSG0281,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0282,I want to raise a dispute for a card payment to Tesco for £8.75.,dispute,false,Disputes/Chargebacks
+MSG0283,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0284,My credit score improved; can you review my APR?,credit,false,Credit/Risk
+MSG0285,"Card used in Bristol but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0286,I think there is a transaction I don’t recognise at eBay for £8.75 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0287,I’d like to apply for a loan—what documents do you need?,credit,false,Credit/Risk
+MSG0288,"Card used in Edinburgh but I was at home. Please help, this looks like fraud.",fraud,false,Fraud/Economic Crime Prevention
+MSG0289,I want to raise a dispute for a card payment to Amazon for £8.75.,dispute,false,Disputes/Chargebacks
+MSG0290,Someone set up a new payee I don’t know. My postcode is M1 1AE,fraud,true,Fraud/Economic Crime Prevention
+MSG0291,I think there is a transaction I don’t recognise at Booking.com for £12.99 yesterday. You can reach me at casey.lee@example.com,fraud,true,Fraud/Economic Crime Prevention
+MSG0292,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0293,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0294,Can you confirm my balance and recent payments?,general,false,General Banking
+MSG0295,I think there is a transaction I don’t recognise at Apple Store for £120.00 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0296,Item not delivered and the retailer won’t refund. How do I start a chargeback?,dispute,false,Disputes/Chargebacks
+MSG0297,I think there is a transaction I don’t recognise at Tesco for £120.00 yesterday.,fraud,false,Fraud/Economic Crime Prevention
+MSG0298,Someone set up a new payee I don’t know.,fraud,false,Fraud/Economic Crime Prevention
+MSG0299,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks
+MSG0300,The hotel charged me twice—please assist with a dispute.,dispute,false,Disputes/Chargebacks

@@ -1,0 +1,25 @@
+patterns:
+  - name: pan_16
+    description: Payment card number (16 digits, grouped)
+    regex: "(?i)(?:\\d{4}[ -]?){3}\\d{4}"
+    mask: "[CARD]"
+  - name: sort_code
+    description: UK sort code (NN-NN-NN)
+    regex: "\\d{2}-\\d{2}-\\d{2}"
+    mask: "[SC]"
+  - name: account_number
+    description: UK account number (8 digits)
+    regex: "\\d{8}"
+    mask: "[ACCT]"
+  - name: email
+    description: Email address
+    regex: "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+"
+    mask: "[EMAIL]"
+  - name: phone_uk
+    description: UK phone in international format
+    regex: "\\+44\\s?7\\d{9,10}"
+    mask: "[PHONE]"
+  - name: postcode_uk
+    description: UK postcode (simplified)
+    regex: "[A-Z]{1,2}\\d[A-Z\\d]?\\s?\\d[A-Z]{2}"
+    mask: "[POSTCODE]"
