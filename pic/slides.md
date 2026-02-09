@@ -29,7 +29,7 @@ Triage customer messages: redact PII → classify intent → policy-grounded dra
 
 ## 3.Solution design
 
-**. Hybrid model: LLM + MTL**
+**. Hybrid model: LLM + MTL(Multi-Task Learning)**
 
 | Component | Solves | Role |
 |-----------|--------|------|
@@ -42,7 +42,7 @@ Benefits: fast MTL train; task tuning; local/cheap/secure; fallback cuts cost; r
 Redact → Model (MTL) → Draft (kb → template or LLM) → Guardrails (citation, PII-in-draft; escalate). Redaction gates all; MTL picks policy; guardrails on final draft.
 
 **. Spec driven development**  
-Proposal → specs → design → tasks; single source of truth; auditable; versioned.
+Proposal → design → specs → tasks -> changes; single source of truth; auditable; versioned.
 
 ---
 
