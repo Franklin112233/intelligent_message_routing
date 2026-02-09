@@ -1,7 +1,5 @@
 # Intelligent message routing with guardrails
 
-**Code repo:** [github.com/Franklin112233/intelligent_message_routing](https://github.com/Franklin112233/intelligent_message_routing)
-
 Triage and route customer messages: PII redaction → intent classification → policy-grounded draft responses → guardrail checks.
 
 ---
