@@ -1,6 +1,6 @@
 # Intelligent message routing with guardrails
 
-Triage and route customer messages: PII redaction → intent classification → policy-grounded draft responses.
+Triage and route customer messages: PII redaction → intent classification → policy-grounded draft responses -> guardrail checks.
 
 ---
 
@@ -9,136 +9,47 @@ Triage and route customer messages: PII redaction → intent classification → 
 | Step | What | How to run |
 |------|------|------------|
 | 1 | Install dependencies | `make install` (or `uv sync`) |
-| 2 | *(Optional)* Train MTL model | `make train` (writes `models/mtl_model.joblib`; run once for MTL classification) |
-| 3 | *(Optional)* Enable LLM draft | Add `OPENAI_API_KEY` and `USE_LLM=1` to `.env` (see [LLM](#llm-gpt-4o-mini)) |
-| 4 | Run the pipeline | `make run` (processes 5 messages: redact → classify → draft → checks) |
+| 2 | *(Optional)* Train MTL model | `make train` (writes `models/mtl_model.joblib`) |
+| 3 | *(Optional)* Enable LLM draft | Add `OPENAI_API_KEY` and `USE_LLM=1` to `.env`; draft then uses GPT-4o-mini (otherwise template). Redacted text only is sent. |
+| 4 | Run the pipeline | `make run` (prompt for message or Enter for 5 from CSV; or `MSG="..."` for one message) |
 | 5 | Run tests | `make test` |
-| 6 | Run evaluation | `make eval` (classification metrics + draft checks on data) |
+| 6 | Run evaluation | `make eval` (optional: `TEST_RATIO=0.2` for 20% holdout; use after `make train TRAIN_RATIO=0.8`) |
 
-Run `make` or `make help` to list all Makefile targets.
+Run `make` or `make help` to list all targets.
+
+![Pipeline result example](result_example.png)
 
 ---
 
-## Setup
+## Setup, run & commands
 
-- **Install dependencies** (UV):
-  ```bash
-  make install
-  # or
-  uv sync
-  ```
-  Or with pip: `pip install -e .` (see `pyproject.toml` for full dependency list).
+**Setup:** `make install`. Data under `assignment/data/`: `messages.csv`, `pii_patterns.yaml`, `kb/*.md`.
 
-- **Data**: Place or symlink data under `assignment/data/`:
-  - `messages.csv` – message_id, text, label, sensitive, suggested_queue
-  - `pii_patterns.yaml` – PII regex patterns
-  - `kb/*.md` – policy snippets per intent
-
-## Run
-
-```bash
-make run
-# or
-uv run python -m app
-```
-
-- **Interactive**: Without a message, the CLI prompts *Enter message (or press Enter to run 5 from CSV)*. Type a message and press Enter to run the pipeline on it; or press Enter with nothing to run on the first 5 rows of `messages.csv`.
-- **Single message**: `make run MSG="Your message here"` or `uv run python -m app "Your message here"` runs the pipeline on that one message only.
-- **Single-step runs**: You can run only one stage with pretty CLI output:
-  - **Redact only**: `make run-redact` or `uv run python -m app redact` — input → redacted text (panels).
-  - **Model prediction only**: `make run-predict` or `uv run python -m app predict` — input → intent, queue, confidence (panels).
-  - **Draft only**: `make run-draft` or `uv run python -m app draft` — input → full draft response (redact + classify + draft + check). Pass `MSG="..."` or you will be prompted.
-- **Output**: When `rich` is installed, batch run shows a progress bar and a results table (ID, intent, queue, confidence, fallback, checks, draft preview); single-message and single-step runs show panels. Confidence is always printed where applicable.
-
-## Commands (all in Makefile)
-
-All run-related commands are in the top-level `Makefile`. Run `make` or `make help` to list them.
+**Run:** `make run` or `uv run python -m app`. Without `MSG`, you get a prompt (Enter message, or Enter to run 5 from CSV). With `MSG="..."` or `uv run python -m app "message"` runs on that one message. Single-step: `make run-redact`, `make run-predict`, `make run-draft` (each takes one input via `MSG` or prompt; pretty panels when `rich` is installed).
 
 | Command | Purpose |
 |--------|--------|
-| `make install` | Install dependencies (uv sync). Run first. |
-| `make train` | Train MTL model; writes `models/mtl_model.joblib`. Optional: `TRAIN_RATIO=0.8` to use 80% for training (holdout 20% for eval). |
-| `make run` | Run pipeline (redact → classify → draft → check). Prompts for a message or Enter for 5 from CSV; or `MSG="..."` to run on one message. Uses MTL if model exists. |
-| `make run-redact` | Redact only: one input → redacted text. `MSG="..."` or prompt. |
-| `make run-predict` | Model prediction only: one input → intent, queue, confidence. `MSG="..."` or prompt. |
-| `make run-draft` | Draft only: one input → draft response (redact + classify + draft + check). `MSG="..."` or prompt. |
-| `make test` | Run unit tests (pytest). |
-| `make eval` | Run evaluation (classification metrics + draft checks). Optional: `TEST_RATIO=0.2` to evaluate on 20% holdout. Override with `DATA_DIR=...` if needed. |
+| `make install` | Install dependencies. Run first. |
+| `make train` | Train MTL. Optional: `TRAIN_RATIO=0.8` for holdout. |
+| `make run` | Full pipeline. `MSG="..."` or prompt. |
+| `make run-redact` | Redact only. `MSG="..."` or prompt. |
+| `make run-predict` | Prediction only (intent, queue, confidence). `MSG="..."` or prompt. |
+| `make run-draft` | Draft only. `MSG="..."` or prompt. |
+| `make test` | Unit tests. |
+| `make eval` | Classification + draft checks. Optional: `TEST_RATIO=0.2`. |
 
-**Holdout evaluation (train/test split):** To get a realistic accuracy (not on the training set), train on 80% of data and evaluate on the held-out 20%:
-```bash
-make train TRAIN_RATIO=0.8
-make eval TEST_RATIO=0.2
-```
-The split is deterministic (`random_state=42`) and stratified by `label`. Without `TEST_RATIO`, eval uses the full dataset (training set accuracy when using MTL).
-
-Environment: put `OPENAI_API_KEY` and `USE_LLM=1` in `.env` to enable LLM draft (see [LLM](#llm-gpt-4o-mini) below).
+Holdout: `make train TRAIN_RATIO=0.8` then `make eval TEST_RATIO=0.2` (split stratified, `random_state=42`).
 
 ---
 
-## What is implemented vs stubbed
+## What is implemented
 
-- **PII redaction**: Implemented (YAML patterns, regex replace, unit tests).
-- **Intent classification**: **Real MTL** in `app/mtl.py` (train with `make train`; shared TF-IDF + two LogisticRegression heads for intent and suggested_queue). Stub backend in `app/classify.py` when no model file. Pipeline and eval use MTL when `models/mtl_model.joblib` exists. Optional train/test split: `TRAIN_RATIO` and `TEST_RATIO` for holdout evaluation.
-- **Draft response**: Implemented for ≥2 intents (card lost/stolen, suspected fraud) with policy citations; template-based or LLM. Confidence-based escalation (threshold 0.7).
-- **Guardrails**: Citation check and PII-in-draft check implemented; wired into pipeline.
-- **Evaluation**: Classification accuracy (MTL or stub), optional holdout eval (`TEST_RATIO`); draft checks on sample; redaction tests in test suite.
-- **CLI (run)**: Interactive prompt (Enter message or Enter for 5 from CSV); single message via `MSG` or positional arg; subcommands `redact`, `predict`, `draft` for single-step runs (`make run-redact`, `make run-predict`, `make run-draft`); when `rich` is installed, progress bar, tables, and panels for output; confidence shown.
-- **LLM draft**: Optional. Set `OPENAI_API_KEY` and `USE_LLM=1` to use **GPT-4o-mini** for draft generation; otherwise template is used. See [LLM (GPT-4o-mini)](#llm-gpt-4o-mini) below.
-
----
-
-## LLM (GPT-4o-mini)
-
-- **Enable**: Put your key in a `.env` file in the project root (or set env vars), then run:
-  ```bash
-  # .env (do not commit; already in .gitignore)
-  OPENAI_API_KEY=sk-...
-  USE_LLM=1
-  ```
-  ```bash
-  make run
-  ```
-  The app loads `.env` automatically via python-dotenv. You can also `export OPENAI_API_KEY` and `export USE_LLM=1` instead.
-- **Behaviour**: When `USE_LLM=1` and `OPENAI_API_KEY` is set, draft replies for supported intents (e.g. fraud, card lost/stolen) are generated by GPT-4o-mini with the policy snippet in context and a citation requirement. On missing key or API error, the pipeline falls back to the template draft.
-- **Cost/latency**: GPT-4o-mini is low-cost and fast (~hundreds of ms per request). See [OpenAI pricing](https://openai.com/api/pricing/); input/output tokens are billed per 1M tokens.
-
-## Assumptions, security, cost/latency
-
-- **Data**: All inputs treated as confidential. No raw text is sent to any external API; **redaction runs before** any call to OpenAI (only redacted text is sent).
-- **Cost/latency**: Stub/MTL classifier: negligible. LLM draft: per-request tokens; use GPT-4o-mini for low cost and latency.
-- **Security**: PII patterns applied before any external call; no raw PII sent to OpenAI. Escalation path for low-confidence or failed draft checks.
-
----
-
-## Trade-offs: ML vs LLM and hybrid
-
-| Prefer | When |
-|--------|------|
-| **Traditional ML (e.g. MTL)** | High volume, strict latency/cost/data-residency, sufficient labelled data; need explainable features/weights. |
-| **LLM (few-shot)** | Fast iteration, few labels, or open-ended drafting; acceptable to redact first and use local or managed API. |
-| **Hybrid (LLM orchestrator + MTL)** | LLM handles redaction policy, tool calls, and drafting; MTL does classification for accuracy and cost; LLM invokes MTL as a tool. |
-
-See `openspec/changes/intelligent-message-routing-guardrails/proposal.md` for the full comparison table (accuracy, latency, cost, security, sensitive data, explainability).
-
----
-
-## Explainability and risk
-
-- **Explainability**: Stub returns label/queue from ground truth; for MTL we would surface features or shared representations; for LLM we would surface rationales/citations (with guardrails).
-- **Risks**: Hallucination/wrong citations (mitigation: ground on kb only, citation check); prompt/data exfiltration (mitigation: redact before any external call); bias/abuse (mitigation: escalation path, document residual risks). See design doc for full risk table.
-
----
-
-## Project layout
-
-| Path | Purpose |
-|------|--------|
-| `app/` | Main code: `redact`, `classify`, `mtl`, `llm`, `draft`, `kb`, `guardrails`, `eval`, `run` |
-| `assignment/data/` | Input data: `messages.csv`, `pii_patterns.yaml`, `kb/*.md` |
-| `models/` | Trained MTL model (`mtl_model.joblib`) after `make train`; gitignored |
-| `tests/` | Unit tests (e.g. redaction) |
-| `openspec/` | OpenSpec change and specs (proposal, design, tasks) |
+- **PII redaction**: Implemented (YAML patterns, regex, unit tests).
+- **Intent classification**: MTL in `app/mtl.py` (TF-IDF + two LogReg heads)
+- **Draft**: ≥2 intents (card lost/stolen, fraud), template or LLM (GPT-4o-mini when `USE_LLM=1` + key); confidence threshold 0.7.
+- **Guardrails**: Citation + PII-in-draft checks; wired into pipeline.
+- **Evaluation**: Classification metrics, draft checks sample, redaction tests.
+- **CLI**: Interactive run; single-step `redact` / `predict` / `draft`; rich progress/tables/panels
 
 ---
 
@@ -157,6 +68,37 @@ flowchart LR
   H --> I[Log / eval]
 ```
 
-- **Pipeline order**: Ingress → **PII redaction** → intent classification → draft (for supported intents) → guardrail checks → logging/eval. Redaction always runs before any non-local model or external service.
-- **Classification**: MTL (`app/mtl.py`) when `models/mtl_model.joblib` exists (after `make train`), else stub (label lookup).
-- **Draft**: Template-based, or LLM (GPT-4o-mini) when `USE_LLM=1` and `OPENAI_API_KEY` set; fallback to template on failure.
+Pipeline: Ingress → **PII redaction** → intent classification → draft (supported intents) → guardrail checks → logging/eval. Redaction runs before any non-local or external call. Classification: MTL when `models/mtl_model.joblib` exists, else stub. Draft: template or LLM (GPT-4o-mini) when enabled; fallback to template on failure.
+
+---
+
+## Spec Driven Development
+
+This project uses **OpenSpec** for spec-driven development: changes are described as proposals, specs, design, and tasks before implementation.
+
+- **Benefits**: Clear scope and acceptance criteria; alignment between product, design, and code; fewer surprises at review time. Specs act as the single source of truth and a living manual.
+- **Formalised workflow**: Follow the schema (e.g. proposal → specs per capability → design → tasks). Stick to the manual and instruction docs so artefacts stay consistent and auditable.
+- **OpenSpec**: Change artefacts live under `openspec/changes/`. You can **modify** specs and **track** progress (e.g. `openspec status`, `openspec instructions`). Version control keeps a history of what was changed or decided and when.
+
+---
+
+## Hybrid model: Multi-Task Learning (MTL) + LLM
+
+| Component | Focus | Role |
+|-----------|--------|------|
+| **MTL** | Intent + suggested queue | Local, explainable classification (TF-IDF + two Logistic Regression heads on `messages.csv`). |
+| **LLM** | Draft generation | Policy-grounded replies with citations; uses redacted text + MTL intent/queue. |
+
+**Flow:** Redact → MTL classifies → load kb snippet for intent → LLM (or template) drafts. MTL drives what to draft and which policy; LLM only drafts, no re-classification.
+
+**Benefits:** Fast MTL training; task-specific tuning for classification accuracy; MTL runs locally (only redacted text to LLM); MTL + LLM together give accurate routing and cited responses.
+
+---
+
+## Assumptions, security, cost, latency & risk
+
+- **Data**: Treated as confidential. No raw text to external APIs; **redaction before** any OpenAI call.
+- **Security**: PII patterns before external call; no raw PII to OpenAI. Escalation on low confidence or failed checks.
+- **Cost/latency**: MTL model negligible; LLM draft per-request (GPT-4o-mini low cost). See [OpenAI pricing](https://openai.com/api/pricing/).
+- **Explainability**: label/queue from data; MTL = features/weights; LLM = rationales/citations (with guardrails).
+- **Risks**: Hallucination/wrong citations (mitigation: ground on kb, citation check); exfiltration (redact first); bias/abuse (escalation path).
