@@ -17,7 +17,7 @@ Triage and route customer messages: PII redaction → intent classification → 
 
 Run `make` or `make help` to list all targets.
 
-![Pipeline result example](result_example.png)
+![Pipeline result example](pic/result_example.png)
 
 ---
 

@@ -21,7 +21,7 @@ Triage customer messages: redact PII → classify intent → policy-grounded dra
 
 ## 2. App runnable example
 
-*Content to be added.*
+![Pipeline result example](result_example2.png)
 
 ---
 
