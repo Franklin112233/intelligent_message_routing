@@ -49,6 +49,7 @@
 - [x] 8.1 Wire pipeline: ingress (e.g. read messages.csv) → redact → classify → draft (for supported intents) → logging/eval
 - [x] 8.2 Command runner with makefile commands for run, test, and eval (and runs eval if applicable)
 - [x] 8.3 CLI for run: interactive prompt (Enter message or Enter to run 5 from CSV); optional single message via MSG or positional arg; rich output (progress, tables, panels) and confidence in run output when rich is available
+- [x] 8.4 Single-step CLI: make run-redact (redact only), make run-predict (model prediction only), make run-draft (draft only); each accepts one input via MSG or prompt and returns pretty CLI output (panels)
 
 ## 9. README and docs
 

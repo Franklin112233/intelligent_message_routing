@@ -172,6 +172,60 @@ def run_pipeline(
             print(sep)
 
 
+def cmd_redact(text: str, data_dir: Path) -> None:
+    """Redact only: input → redacted text (pretty output)."""
+    pii_path = data_dir / "pii_patterns.yaml"
+    patterns = load_patterns(pii_path)
+    redacted = redact(text, patterns)
+    if RICH_AVAILABLE:
+        console.print(Panel(text, title="[cyan]Input[/cyan]", border_style="dim"))
+        console.print(
+            Panel(redacted, title="[green]Redacted[/green]", border_style="green")
+        )
+    else:
+        print("Input:", text)
+        print("Redacted:", redacted)
+
+
+def cmd_predict(text: str, data_dir: Path, messages_path: Path) -> None:
+    """Redact + classify only: input → intent, queue, confidence (pretty output)."""
+    pii_path = data_dir / "pii_patterns.yaml"
+    patterns = load_patterns(pii_path)
+    model_path = Path(__file__).resolve().parent.parent / DEFAULT_MODEL_DIR / MODEL_FILE
+    backend = "mtl" if model_path.exists() else "stub"
+    redacted = redact(text, patterns)
+    res = classify(
+        redacted,
+        messages_path,
+        message_id=None,
+        backend=backend,
+        model_path=model_path if backend == "mtl" else None,
+    )
+    conf = res.confidence if res.confidence is not None else 0.0
+    if RICH_AVAILABLE:
+        console.print(Panel(text, title="[cyan]Input[/cyan]", border_style="dim"))
+        console.print(Panel(redacted, title="[dim]Redacted[/dim]", border_style="dim"))
+        result_lines = [
+            f"[bold]Intent[/bold]: {res.intent}",
+            f"[bold]Queue[/bold]: {res.suggested_queue}",
+            f"[bold]Confidence[/bold]: {conf:.2f}",
+            f"[bold]Backend[/bold]: {backend}",
+        ]
+        console.print(
+            Panel(
+                "\n".join(result_lines),
+                title="[cyan]Prediction[/cyan]",
+                border_style="cyan",
+            )
+        )
+    else:
+        print("Input:", text[:120], "..." if len(text) > 120 else "")
+        print("Redacted:", redacted[:120], "..." if len(redacted) > 120 else "")
+        print(
+            f"Intent: {res.intent}  Queue: {res.suggested_queue}  Confidence: {conf:.2f}  Backend: {backend}"
+        )
+
+
 def run_single_message(text: str, data_dir: Path, messages_path: Path) -> None:
     """Run pipeline on one custom message (no message_id; classifier uses MTL or stub default)."""
     pii_path = data_dir / "pii_patterns.yaml"
@@ -232,24 +286,59 @@ def run_single_message(text: str, data_dir: Path, messages_path: Path) -> None:
         print(f"  draft: {draft}")
 
 
+def _get_message_from_args_or_prompt(
+    args_message: str | None,
+    prompt_enter_csv: bool = False,
+) -> str:
+    """Get message from positional arg, MSG env, or prompt. If prompt_enter_csv, prompt allows Enter for CSV run."""
+    msg = (args_message or os.environ.get("MSG") or "").strip()
+    if msg:
+        return msg
+    if prompt_enter_csv:
+        prompt_text = (
+            "[cyan]Enter message (or press Enter to run 5 from CSV)[/cyan]"
+            if RICH_AVAILABLE
+            else "Enter message (or press Enter to run 5 from CSV): "
+        )
+    else:
+        prompt_text = (
+            "[cyan]Enter message[/cyan]" if RICH_AVAILABLE else "Enter message: "
+        )
+    out = Prompt.ask(prompt_text, default="") if RICH_AVAILABLE else input(prompt_text)
+    return (out or "").strip()
+
+
 def main() -> None:
     base = Path(__file__).resolve().parent.parent
-    data_dir = base / "assignment" / "data"
-    messages_path = data_dir / "messages.csv"
-    p = argparse.ArgumentParser(description="Run message routing pipeline (CLI)")
-    p.add_argument(
-        "message",
-        nargs="?",
-        default=None,
-        help="Optional: run on this single message instead of messages.csv",
+    data_dir_default = base / "assignment" / "data"
+
+    p = argparse.ArgumentParser(
+        description="Message routing pipeline (CLI). Use: app [run|redact|predict|draft] [message]",
     )
     p.add_argument(
         "--data-dir",
         type=Path,
-        default=data_dir,
+        default=data_dir_default,
         help="Data directory (default: assignment/data)",
     )
+    p.add_argument(
+        "arg1",
+        nargs="?",
+        default=None,
+        help="Command (run|redact|predict|draft) or message for run",
+    )
+    p.add_argument(
+        "arg2",
+        nargs="?",
+        default=None,
+        help="Message when first arg is a command",
+    )
     args = p.parse_args()
+    commands = ("run", "redact", "predict", "draft")
+    if args.arg1 in commands:
+        cmd, message_arg = args.arg1, args.arg2
+    else:
+        cmd, message_arg = "run", args.arg1
     data_dir = args.data_dir
     messages_path = data_dir / "messages.csv"
 
@@ -260,24 +349,33 @@ def main() -> None:
         print("Intelligent message routing")
         print(f"Data directory: {data_dir}\n")
 
-    single_msg = (args.message or os.environ.get("MSG") or "").strip()
-    # With MSG / positional arg: use it, no prompt. Without: prompt once; Enter = run 5 from CSV.
-    if not single_msg:
-        prompt_text = (
-            "[cyan]Enter message (or press Enter to run 5 from CSV)[/cyan]"
-            if RICH_AVAILABLE
-            else "Enter message (or press Enter to run 5 from CSV): "
+    if cmd == "run":
+        single_msg = _get_message_from_args_or_prompt(
+            message_arg,
+            prompt_enter_csv=True,
         )
-        prompt_msg = (
-            Prompt.ask(prompt_text, default="")
-            if RICH_AVAILABLE
-            else input("Enter message (or press Enter to run 5 from CSV): ")
-        )
-        single_msg = (prompt_msg or "").strip()
-    if single_msg:
-        run_single_message(single_msg, data_dir, messages_path)
-    else:
-        run_pipeline(messages_path, data_dir, limit=5)
+        if single_msg:
+            run_single_message(single_msg, data_dir, messages_path)
+        else:
+            run_pipeline(messages_path, data_dir, limit=5)
+    elif cmd == "redact":
+        msg = _get_message_from_args_or_prompt(message_arg)
+        if msg:
+            cmd_redact(msg, data_dir)
+        else:
+            (console or print)("No message provided.")
+    elif cmd == "predict":
+        msg = _get_message_from_args_or_prompt(message_arg)
+        if msg:
+            cmd_predict(msg, data_dir, messages_path)
+        else:
+            (console or print)("No message provided.")
+    elif cmd == "draft":
+        msg = _get_message_from_args_or_prompt(message_arg)
+        if msg:
+            run_single_message(msg, data_dir, messages_path)
+        else:
+            (console or print)("No message provided.")
 
 
 if __name__ == "__main__":

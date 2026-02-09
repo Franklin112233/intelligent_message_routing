@@ -44,7 +44,11 @@ uv run python -m app
 
 - **Interactive**: Without a message, the CLI prompts *Enter message (or press Enter to run 5 from CSV)*. Type a message and press Enter to run the pipeline on it; or press Enter with nothing to run on the first 5 rows of `messages.csv`.
 - **Single message**: `make run MSG="Your message here"` or `uv run python -m app "Your message here"` runs the pipeline on that one message only.
-- **Output**: When `rich` is installed, batch run shows a progress bar and a results table (ID, intent, queue, confidence, fallback, checks, draft preview); single-message run shows panels (Config, Input, Result, Draft). Confidence is always printed.
+- **Single-step runs**: You can run only one stage with pretty CLI output:
+  - **Redact only**: `make run-redact` or `uv run python -m app redact` — input → redacted text (panels).
+  - **Model prediction only**: `make run-predict` or `uv run python -m app predict` — input → intent, queue, confidence (panels).
+  - **Draft only**: `make run-draft` or `uv run python -m app draft` — input → full draft response (redact + classify + draft + check). Pass `MSG="..."` or you will be prompted.
+- **Output**: When `rich` is installed, batch run shows a progress bar and a results table (ID, intent, queue, confidence, fallback, checks, draft preview); single-message and single-step runs show panels. Confidence is always printed where applicable.
 
 ## Commands (all in Makefile)
 
@@ -55,6 +59,9 @@ All run-related commands are in the top-level `Makefile`. Run `make` or `make he
 | `make install` | Install dependencies (uv sync). Run first. |
 | `make train` | Train MTL model; writes `models/mtl_model.joblib`. Optional: `TRAIN_RATIO=0.8` to use 80% for training (holdout 20% for eval). |
 | `make run` | Run pipeline (redact → classify → draft → check). Prompts for a message or Enter for 5 from CSV; or `MSG="..."` to run on one message. Uses MTL if model exists. |
+| `make run-redact` | Redact only: one input → redacted text. `MSG="..."` or prompt. |
+| `make run-predict` | Model prediction only: one input → intent, queue, confidence. `MSG="..."` or prompt. |
+| `make run-draft` | Draft only: one input → draft response (redact + classify + draft + check). `MSG="..."` or prompt. |
 | `make test` | Run unit tests (pytest). |
 | `make eval` | Run evaluation (classification metrics + draft checks). Optional: `TEST_RATIO=0.2` to evaluate on 20% holdout. Override with `DATA_DIR=...` if needed. |
 
@@ -76,7 +83,7 @@ Environment: put `OPENAI_API_KEY` and `USE_LLM=1` in `.env` to enable LLM draft 
 - **Draft response**: Implemented for ≥2 intents (card lost/stolen, suspected fraud) with policy citations; template-based or LLM. Confidence-based escalation (threshold 0.7).
 - **Guardrails**: Citation check and PII-in-draft check implemented; wired into pipeline.
 - **Evaluation**: Classification accuracy (MTL or stub), optional holdout eval (`TEST_RATIO`); draft checks on sample; redaction tests in test suite.
-- **CLI (run)**: Interactive prompt (Enter message or Enter for 5 from CSV); single message via `MSG` or positional arg; when `rich` is installed, progress bar, tables, and panels for output; confidence shown.
+- **CLI (run)**: Interactive prompt (Enter message or Enter for 5 from CSV); single message via `MSG` or positional arg; subcommands `redact`, `predict`, `draft` for single-step runs (`make run-redact`, `make run-predict`, `make run-draft`); when `rich` is installed, progress bar, tables, and panels for output; confidence shown.
 - **LLM draft**: Optional. Set `OPENAI_API_KEY` and `USE_LLM=1` to use **GPT-4o-mini** for draft generation; otherwise template is used. See [LLM (GPT-4o-mini)](#llm-gpt-4o-mini) below.
 
 ---
