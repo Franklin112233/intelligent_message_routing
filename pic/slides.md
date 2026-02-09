@@ -1,5 +1,7 @@
 # Intelligent message routing with guardrails
 
+**Code:** [github.com/Franklin112233/intelligent_message_routing](https://github.com/Franklin112233/intelligent_message_routing)
+
 ---
 
 ## 1. Goal, features, and KPI
