@@ -7,6 +7,11 @@ The system SHALL produce basic classification metrics.
 #### Scenario: Classification metrics
 Given labelled messages, when evaluation runs, then classification metrics (e.g. precision/recall) are produced.
 
+### Requirement: Optional holdout evaluation
+The system MAY support evaluating classification on a held-out test set (train on a fraction of data, evaluate on the rest) for realistic accuracy.
+#### Scenario: Holdout eval
+Given messages and a train/test split (e.g. 80/20), when train uses the train fraction and eval uses the test fraction with the same split seed, then classification metrics are reported on the test set only.
+
 ### Requirement: Redaction unit tests
 The system SHALL include redaction unit tests that prove PII is redacted.
 #### Scenario: Redaction tests

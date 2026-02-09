@@ -42,11 +42,13 @@
 - [x] 7.1 Compute basic classification metrics (e.g. precision/recall) on labelled messages
 - [x] 7.2 Redaction unit tests (covered in 2.4; ensure they run in test suite)
 - [x] 7.3 At least one automated test/check for draft responses (masking, citation, or safety) in eval path
+- [x] 7.4 Holdout evaluation: optional train/test split via TRAIN_RATIO (train) and TEST_RATIO (eval); stratified split, same random_state for reproducibility
 
 ## 8. Pipeline and entrypoint
 
 - [x] 8.1 Wire pipeline: ingress (e.g. read messages.csv) → redact → classify → draft (for supported intents) → logging/eval
 - [x] 8.2 Command runner with makefile commands for run, test, and eval (and runs eval if applicable)
+- [x] 8.3 CLI for run: interactive prompt (Enter message or Enter to run 5 from CSV); optional single message via MSG or positional arg; rich output (progress, tables, panels) and confidence in run output when rich is available
 
 ## 9. README and docs
 

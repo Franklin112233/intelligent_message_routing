@@ -12,6 +12,7 @@ import joblib
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
 from app.classify import ClassificationResult
@@ -44,10 +45,19 @@ def _queue_normalize(q: str) -> str:
     return "General Banking"
 
 
-def train(messages_path: Path, model_path: Optional[Path] = None) -> "MTLClassifier":
+# Fixed seed for reproducible train/test split (must match eval.py)
+SPLIT_RANDOM_STATE = 42
+
+
+def train(
+    messages_path: Path,
+    model_path: Optional[Path] = None,
+    train_ratio: float = 1.0,
+) -> "MTLClassifier":
     """
     Train MTL model on messages.csv (text → intent, suggested_queue).
-    Saves pipeline (TfidfVectorizer + intent clf + queue clf) to model_path.
+    If train_ratio < 1.0, use only that fraction for training (same split as eval --test-ratio).
+    Saves pipeline to model_path.
     """
     if not messages_path.exists():
         raise FileNotFoundError(f"Messages file not found: {messages_path}")
@@ -58,6 +68,20 @@ def train(messages_path: Path, model_path: Optional[Path] = None) -> "MTLClassif
         or "suggested_queue" not in df.columns
     ):
         raise ValueError("messages.csv must have columns: text, label, suggested_queue")
+
+    if train_ratio < 1.0 and train_ratio > 0:
+        try:
+            train_df, _ = train_test_split(
+                df,
+                train_size=train_ratio,
+                random_state=SPLIT_RANDOM_STATE,
+                stratify=df["label"],
+            )
+        except ValueError:
+            train_df, _ = train_test_split(
+                df, train_size=train_ratio, random_state=SPLIT_RANDOM_STATE
+            )
+        df = train_df
 
     X = df["text"].astype(str).fillna("")
     y_intent = df["label"].apply(_label_to_intent)

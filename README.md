@@ -42,6 +42,10 @@ make run
 uv run python -m app
 ```
 
+- **Interactive**: Without a message, the CLI prompts *Enter message (or press Enter to run 5 from CSV)*. Type a message and press Enter to run the pipeline on it; or press Enter with nothing to run on the first 5 rows of `messages.csv`.
+- **Single message**: `make run MSG="Your message here"` or `uv run python -m app "Your message here"` runs the pipeline on that one message only.
+- **Output**: When `rich` is installed, batch run shows a progress bar and a results table (ID, intent, queue, confidence, fallback, checks, draft preview); single-message run shows panels (Config, Input, Result, Draft). Confidence is always printed.
+
 ## Commands (all in Makefile)
 
 All run-related commands are in the top-level `Makefile`. Run `make` or `make help` to list them.
@@ -49,10 +53,17 @@ All run-related commands are in the top-level `Makefile`. Run `make` or `make he
 | Command | Purpose |
 |--------|--------|
 | `make install` | Install dependencies (uv sync). Run first. |
-| `make train` | Train MTL model; writes `models/mtl_model.joblib`. Run once before using MTL. |
-| `make run` | Run pipeline (redact → classify → draft → check). Uses MTL if model exists. |
+| `make train` | Train MTL model; writes `models/mtl_model.joblib`. Optional: `TRAIN_RATIO=0.8` to use 80% for training (holdout 20% for eval). |
+| `make run` | Run pipeline (redact → classify → draft → check). Prompts for a message or Enter for 5 from CSV; or `MSG="..."` to run on one message. Uses MTL if model exists. |
 | `make test` | Run unit tests (pytest). |
-| `make eval` | Run evaluation (classification metrics + draft checks). Override with `DATA_DIR=...` if needed. |
+| `make eval` | Run evaluation (classification metrics + draft checks). Optional: `TEST_RATIO=0.2` to evaluate on 20% holdout. Override with `DATA_DIR=...` if needed. |
+
+**Holdout evaluation (train/test split):** To get a realistic accuracy (not on the training set), train on 80% of data and evaluate on the held-out 20%:
+```bash
+make train TRAIN_RATIO=0.8
+make eval TEST_RATIO=0.2
+```
+The split is deterministic (`random_state=42`) and stratified by `label`. Without `TEST_RATIO`, eval uses the full dataset (training set accuracy when using MTL).
 
 Environment: put `OPENAI_API_KEY` and `USE_LLM=1` in `.env` to enable LLM draft (see [LLM](#llm-gpt-4o-mini) below).
 
@@ -61,10 +72,11 @@ Environment: put `OPENAI_API_KEY` and `USE_LLM=1` in `.env` to enable LLM draft 
 ## What is implemented vs stubbed
 
 - **PII redaction**: Implemented (YAML patterns, regex replace, unit tests).
-- **Intent classification**: **Real MTL** in `app/mtl.py` (train with `make train`; shared TF-IDF + two LogisticRegression heads for intent and suggested_queue). Stub backend in `app/classify.py` when no model file. Pipeline and eval use MTL when `models/mtl_model.joblib` exists.
-- **Draft response**: Implemented for ≥2 intents (card lost/stolen, suspected fraud) with policy citations; template-based output only (no placeholder text). Confidence-based escalation (threshold 0.7).
+- **Intent classification**: **Real MTL** in `app/mtl.py` (train with `make train`; shared TF-IDF + two LogisticRegression heads for intent and suggested_queue). Stub backend in `app/classify.py` when no model file. Pipeline and eval use MTL when `models/mtl_model.joblib` exists. Optional train/test split: `TRAIN_RATIO` and `TEST_RATIO` for holdout evaluation.
+- **Draft response**: Implemented for ≥2 intents (card lost/stolen, suspected fraud) with policy citations; template-based or LLM. Confidence-based escalation (threshold 0.7).
 - **Guardrails**: Citation check and PII-in-draft check implemented; wired into pipeline.
-- **Evaluation**: Classification accuracy (MTL or stub per model existence), draft checks on sample; redaction tests in test suite.
+- **Evaluation**: Classification accuracy (MTL or stub), optional holdout eval (`TEST_RATIO`); draft checks on sample; redaction tests in test suite.
+- **CLI (run)**: Interactive prompt (Enter message or Enter for 5 from CSV); single message via `MSG` or positional arg; when `rich` is installed, progress bar, tables, and panels for output; confidence shown.
 - **LLM draft**: Optional. Set `OPENAI_API_KEY` and `USE_LLM=1` to use **GPT-4o-mini** for draft generation; otherwise template is used. See [LLM (GPT-4o-mini)](#llm-gpt-4o-mini) below.
 
 ---
