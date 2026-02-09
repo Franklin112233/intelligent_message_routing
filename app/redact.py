@@ -1,5 +1,6 @@
 """PII redaction: load patterns from YAML, replace matches with placeholders."""
 
+import re
 from pathlib import Path
 from typing import Any
 
@@ -29,8 +30,6 @@ def load_patterns(path: Path) -> list[dict[str, Any]]:
 
 def redact(text: str, patterns: list[dict[str, Any]]) -> str:
     """Apply each pattern: replace regex matches with pattern['mask']. Returns redacted text."""
-    import re
-
     out = text
     for p in patterns:
         try:

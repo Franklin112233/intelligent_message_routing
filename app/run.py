@@ -4,7 +4,6 @@ import argparse
 import os
 from pathlib import Path
 
-from app.config import DEFAULT_DATA_DIR
 from app.redact import load_patterns, redact
 from app.classify import classify
 from app.kb import load_kb

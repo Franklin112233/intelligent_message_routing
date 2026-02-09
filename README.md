@@ -1,6 +1,8 @@
 # Intelligent message routing with guardrails
 
-Triage and route customer messages: PII redaction → intent classification → policy-grounded draft responses -> guardrail checks.
+**Code repo:** [github.com/Franklin112233/intelligent_message_routing](https://github.com/Franklin112233/intelligent_message_routing)
+
+Triage and route customer messages: PII redaction → intent classification → policy-grounded draft responses → guardrail checks.
 
 ---
 
@@ -17,7 +19,7 @@ Triage and route customer messages: PII redaction → intent classification → 
 
 Run `make` or `make help` to list all targets.
 
-![Pipeline result example](pic/result_example.png)
+![Pipeline result example](pic/result_example2.png)
 
 ---
 
