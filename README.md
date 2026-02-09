@@ -111,14 +111,14 @@ flowchart LR
   D --> F
 ```
 
-| Component | Focus | Role |
+| Component | Solves | Role |
 |-----------|--------|------|
-| **MTL** | Intent + suggested queue | Local, explainable classification (TF-IDF + two Logistic Regression heads on `messages.csv`). |
-| **LLM** | Draft generation | Policy-grounded replies with citations; uses redacted text + MTL intent/queue. |
+| **MTL** | Intent + queue; latency & cost; explainability; data local. | TF-IDF + 2 LogReg; inference inside the internal environment; no raw data out. |
+| **LLM** | Workflow orchestrator. Draft text; policy + citations; flexible phrasing. | Draft only (redacted + intent); fallback; guardrail checks. |
 
-**Flow:** Redact → MTL classifies → load kb snippet for intent → LLM (or template) drafts. MTL drives what to draft and which policy; LLM only drafts, no re-classification.
+**Flow:** Redact → Model (MTL) → Draft (kb → template or LLM) → Guardrails. Redaction gates all; MTL picks policy; guardrails on final draft.
 
-**Benefits:** Fast MTL training; task-specific tuning for classification accuracy; MTL runs locally (only redacted text); MTL + LLM together give accurate routing and cited responses.
+**Benefits:** Fast MTL train; task tuning; local/cheap/secure; fallback cuts cost; accurate routing + cited responses.
 
 ---
 
@@ -140,10 +140,17 @@ After drafting, **guardrails** run on the output: citation check and PII-in-draf
 
 ---
 
-## Assumptions, security, cost, latency & risk
+## Implemented vs future improvements
 
-- **Data**: Treated as confidential. No raw text to external APIs; **redaction before** any OpenAI call.
-- **Security**: PII patterns before external call; no raw PII to OpenAI. Escalation on low confidence or failed checks.
-- **Cost/latency**: MTL model negligible; LLM draft per-request (GPT-4o-mini low cost). See [OpenAI pricing](https://openai.com/api/pricing/).
-- **Explainability**: label/queue from data; MTL = features/weights; LLM = rationales/citations (with guardrails).
-- **Risks**: Hallucination/wrong citations (mitigation: ground on kb, citation check); exfiltration (redact first); bias/abuse (escalation path).
+| Area | Implemented | Future |
+|------|-------------|--------|
+| **PII redaction** | YAML + regex, tests; before external call. | Rules-based metrics; more patterns. |
+| **Intent classification** | MTL (TF-IDF + 2 LogReg); stub; holdout. | More intents; LLM few-shot; BERT tuning for semantic information. |
+| **Draft** | ≥2 intents; template/LLM; 0.7, fallback. | More intents; internal LLM. |
+| **Guardrails** | Citation + PII-in-draft; escalate. | Safety filter; grammar; thresholds; business rules/compliance. |
+| **Evaluation** | Metrics; draft checks; redaction tests; holdout. | Recall curve; per-intent; fairness. |
+| **CLI / run** | Interactive; panels. | API; batch. |
+| **Ops / monitoring** | Logs, eval. | Dashboards; drift; alerting; retrain. |
+| **Risk** | Redact first; no PII out; escalation. | Risk register; audit; data/model governance. |
+| **Cost** | MTL cheap; LLM per-request; fallback saves tokens. | Alerts; quota; cost per queue; on-prem LLM. |
+| **Latency** | MTL ms; LLM 100s ms; fixed order. | SLA; async; quantization. |
