@@ -11,3 +11,5 @@ Given a message containing PII, when sending to an external or non-local service
 The system SHALL prove redaction with a simple test.
 #### Scenario: Redaction test
 Given a test message with known PII, when redaction is applied, then the output contains no raw PII and tests pass.
+
+**Implementation (code sync):** `app/redact.py` loads `pii_patterns.yaml`, applies regex/pattern replacement; pipeline calls redact before classify/draft. Tests in `tests/`.

@@ -256,7 +256,12 @@ def run_single_message(text: str, data_dir: Path, messages_path: Path) -> None:
             f"{'LLM (GPT-4o-mini)' if use_llm else 'template'}"
         )
         console.print(Panel(header, title="[cyan]Config[/cyan]", border_style="dim"))
-        console.print(Panel(text, title="[cyan]Input[/cyan]", border_style="dim"))
+        console.print(
+            Panel(text, title="[cyan]Input Message[/cyan]", border_style="dim")
+        )
+        console.print(
+            Panel(redacted, title="[cyan]Redaction[/cyan]", border_style="yellow")
+        )
         checks_display = _status_style(ok) if ok else f"[fail]{status}[/fail]"
         result_lines = [
             f"[bold]Intent[/bold]: {res.intent}",
@@ -270,16 +275,17 @@ def run_single_message(text: str, data_dir: Path, messages_path: Path) -> None:
         console.print(
             Panel(
                 "\n".join(result_lines),
-                title="[cyan]Result[/cyan]",
+                title="[cyan]Intent/Queue Prediction[/cyan]",
                 border_style="cyan",
             )
         )
         console.print(Panel(draft, title="[cyan]Draft[/cyan]", border_style="green"))
     else:
         print(f"Backend: {backend}. Draft: {'LLM' if use_llm else 'template'}.\n")
-        print(f"  input: {text[:120]}{'...' if len(text) > 120 else ''}\n")
+        print(f"  Input message: {text[:120]}{'...' if len(text) > 120 else ''}\n")
+        print(f"  Redaction: {redacted[:120]}{'...' if len(redacted) > 120 else ''}\n")
         print(
-            f"  intent={res.intent}  queue={res.suggested_queue}  confidence={conf:.2f}  fallback={used_fallback}  checks={status}"
+            f"  Intent/Queue Prediction: intent={res.intent}  queue={res.suggested_queue}  confidence={conf:.2f}  fallback={used_fallback}  checks={status}"
         )
         if use_llm and conf < 0.7:
             print("  (LLM skipped: confidence < 0.7)")

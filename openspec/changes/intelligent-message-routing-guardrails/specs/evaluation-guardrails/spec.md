@@ -21,3 +21,5 @@ Given redaction logic, when unit tests run, then they verify configured PII patt
 The system SHALL run at least one automated check on draft responses (e.g. masking present, policy citation present, basic safety rule).
 #### Scenario: Draft checks
 Given a draft response, when checks run, then at least one of: PII masking present, policy citation present, or basic safety rule is verified.
+
+**Implementation (code sync):** `app/guardrails.py`: citation check and PII-in-draft check; `app/eval.py` runs classification metrics (optional TEST_RATIO holdout) and draft checks. `make eval`; `make test` for unit tests including redaction.

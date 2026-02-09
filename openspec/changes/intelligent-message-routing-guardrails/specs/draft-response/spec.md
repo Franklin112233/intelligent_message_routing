@@ -11,3 +11,5 @@ Given a message of a supported intent and relevant kb snippets, when draft is ge
 The system SHALL provide a no-LLM fallback and confidence-based escalation.
 #### Scenario: Fallback and escalation
 Given low confidence or LLM unavailable, then a no-LLM fallback response or escalation path is used.
+
+**Implementation (code sync):** `app/draft.py`. Fallback/escalation when: intent not in draft scope (escalation message); no kb snippet (escalation); confidence < 0.7 (template, no LLM); LLM disabled/unavailable/error (template + `[No-LLM fallback]`). Otherwise LLM (GPT-4o-mini) or template; citation `[kb: key]`. Guardrails (citation + PII-in-draft) run after draft; see evaluation-guardrails spec.

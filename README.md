@@ -80,9 +80,36 @@ This project uses **OpenSpec** for spec-driven development: changes are describe
 - **Formalised workflow**: Follow the schema (e.g. proposal → specs per capability → design → tasks). Stick to the manual and instruction docs so artefacts stay consistent and auditable.
 - **OpenSpec**: Change artefacts live under `openspec/changes/`. You can **modify** specs and **track** progress (e.g. `openspec status`, `openspec instructions`). Version control keeps a history of what was changed or decided and when.
 
+**Current change (aligned with this codebase):** `openspec/changes/intelligent-message-routing-guardrails/` — **proposal** (why, what, capabilities), **specs** (pii-redaction, intent-classification, draft-response, evaluation-guardrails), **design** (decisions, risks, implementation notes), **tasks** (all completed). Each spec includes a short *Implementation (code sync)* line pointing at the implementing module so docs stay in sync with the code.
+
 ---
 
 ## Hybrid model: Multi-Task Learning (MTL) + LLM
+
+**MTL structure (shared representation, two heads):**
+
+```mermaid
+flowchart LR
+  subgraph input[" "]
+    A[Redacted text]
+  end
+  subgraph shared["Shared representation"]
+    B[TF-IDF vectorizer]
+  end
+  subgraph heads["Classification heads"]
+    C[Logistic Regression]
+    D[Logistic Regression]
+  end
+  subgraph output[" "]
+    E[intent / label]
+    F[suggested_queue]
+  end
+  A --> B
+  B --> C
+  B --> D
+  C --> E
+  D --> F
+```
 
 | Component | Focus | Role |
 |-----------|--------|------|
@@ -91,7 +118,25 @@ This project uses **OpenSpec** for spec-driven development: changes are describe
 
 **Flow:** Redact → MTL classifies → load kb snippet for intent → LLM (or template) drafts. MTL drives what to draft and which policy; LLM only drafts, no re-classification.
 
-**Benefits:** Fast MTL training; task-specific tuning for classification accuracy; MTL runs locally (only redacted text to LLM); MTL + LLM together give accurate routing and cited responses.
+**Benefits:** Fast MTL training; task-specific tuning for classification accuracy; MTL runs locally (only redacted text); MTL + LLM together give accurate routing and cited responses.
+
+---
+
+## Draft and fallback logic
+
+Draft is generated only for **supported intents** (e.g. card lost/stolen, suspected fraud). For other intents we return an escalation message and set `fallback=True`.
+
+| Condition | Result |
+|-----------|--------|
+| Intent not in draft scope | Escalation message; `fallback=True`. |
+| No kb snippet for intent | Escalation message; `fallback=True`. |
+| Confidence &lt; 0.7 | Template draft; `fallback=True` (no LLM call). |
+| LLM disabled / unavailable / error | Template draft + `[No-LLM fallback]`; `fallback=True`. |
+| LLM returns text | Use LLM draft; `fallback=False`. |
+
+When `fallback=True`, the pipeline uses the template (no LLM call), which **saves tokens and cost** (no per-request API usage).
+
+After drafting, **guardrails** run on the output: citation check and PII-in-draft check. They do not change the draft text; the pipeline logs pass/fail (e.g. `checks=OK` or `FAIL:possible_pii_in_draft`). Low confidence or failed checks can drive escalation.
 
 ---
 

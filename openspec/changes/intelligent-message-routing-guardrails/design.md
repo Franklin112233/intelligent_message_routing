@@ -81,14 +81,14 @@
 - **Deploy**: N/A for assignment (runnable locally or in notebook). If this were production: deploy redaction and classification first; add draft response behind feature flag; roll out by queue.
 - **Rollback**: No live migration; revert code and re-run pipeline.
 
-## Open Questions
+## Resolved (was Open Questions)
 
-- Exact confidence threshold for escalation (e.g. 0.7 or configurable).
-- Format of citation in draft output (e.g. `[kb: filename]` vs inline footnote).
+- **Confidence threshold**: 0.7 (`CONFIDENCE_THRESHOLD` in `app/draft.py`); below this we use template and set `fallback=True` (no LLM call).
+- **Citation format**: `[kb: <key>]` in draft text (e.g. `[kb: card_lost_stolen]`, `[kb: suspected_fraud]`); template and LLM both emit this.
 
-## Implementation notes (no placeholders)
+## Implementation notes (aligned with code)
 
 - **Classification**: `app/classify.py` (interface); `app/mtl.py` (real MTL train + predict: shared TF-IDF + two LogisticRegression heads for intent and suggested_queue); stub in classify.py for fallback. Run/eval use MTL when `models/mtl_model.joblib` exists (train via `make train` or `python -m app.train_mtl`). **Train/test split**: `--train-ratio` (train_mtl) and `--test-ratio` (eval) with fixed `random_state=42` and stratified split; e.g. `make train TRAIN_RATIO=0.8` then `make eval TEST_RATIO=0.2` for holdout evaluation.
 - **Draft**: `app/draft.py` produces real template-based or LLM-based text with citations. **LLM draft**: `app/llm.py` (GPT-4o-mini); set `OPENAI_API_KEY` (e.g. in `.env`) and `USE_LLM=1` to enable; only redacted text is sent; fallback to template on missing key or API error.
-- **CLI (run)**: `app/run.py` is a small CLI: without `MSG`, it prompts "Enter message (or press Enter to run 5 from CSV)"; with `MSG="..."` or positional arg it runs on that single message. **Single-step commands**: `redact` (input → redacted text), `predict` (input → intent, queue, confidence), `draft` (input → full draft); each takes one input via `MSG` or prompt and prints pretty output (panels when rich is installed). Makefile targets: `make run-redact`, `make run-predict`, `make run-draft`. When `rich` is installed: progress bar for batch, tables for batch results, panels for single-message and single-step result; confidence is shown where applicable.
-- **Docs**: README includes quick start (steps in order with commands), project layout table, commands table (all in Makefile, including run-redact/run-predict/run-draft), holdout eval (TRAIN_RATIO / TEST_RATIO), and system architecture (mermaid). Makefile default target is `help`; all run-related commands: install, train, run, run-redact, run-predict, run-draft, test, eval.
+- **CLI (run)**: `app/run.py`: without `MSG`, prompts "Enter message (or press Enter to run 5 from CSV)"; with `MSG="..."` or positional arg runs on one message. **Single-message panels** (in order): Config → **Input Message** → **Redaction** (redacted text) → **Intent/Queue Prediction** (intent, queue, confidence, fallback, checks) → **Draft**. **Single-step**: `redact`, `predict`, `draft`; each via `MSG` or prompt; Makefile: `make run-redact`, `make run-predict`, `make run-draft`. Rich: progress bar for batch, tables for batch, panels for single-message; confidence and fallback shown.
+- **Docs**: README: quick start, setup/run/commands (one section), what is implemented, system architecture, Spec Driven Development (openspec pointer), hybrid model (MTL + LLM with diagram), draft and fallback logic, assumptions/security/cost/risk. Makefile: install, train, run, run-redact, run-predict, run-draft, test, eval; holdout via TRAIN_RATIO / TEST_RATIO.
